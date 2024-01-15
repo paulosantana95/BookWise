@@ -2,9 +2,19 @@ import { ChartLineUp } from "@phosphor-icons/react";
 import { PageTitle } from "../ui/PageTitle";
 import { Container } from "./styles";
 import { Text } from "../Typography";
-import { RatingCard } from "../RatingCard";
+import { RatingCard, RatingWithAuthorAndBook } from "../RatingCard";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/axios";
 
 export const LatestRatings = () => {
+  const { data: ratings } = useQuery<RatingWithAuthorAndBook[]>({
+    queryKey: ["latest-ratings"],
+    queryFn: async () => {
+      const { data } = await api.get("/ratings/latest");
+      return data?.ratings ?? [];
+    },
+  });
+
   return (
     <Container>
       <PageTitle
@@ -16,33 +26,8 @@ export const LatestRatings = () => {
       <Text size="sm">Avaliações mais recentes</Text>
 
       <section>
-        {Array.from({ length: 20 }).map((_, i) => (
-          <RatingCard
-            key={i}
-            rating={{
-              id: "aa",
-              rate: 4,
-              user: {
-                name: "jhon Doe",
-                avatar_url:
-                  "https://avatars.githubusercontent.com/u/91387292?v=4",
-                email: "johndoe@gmail.com",
-                id: "asoaspk",
-                created_at: new Date(),
-              },
-              book: {
-                id: "aopskpoas",
-                cover_url:
-                  "https://avatars.githubusercontent.com/u/91387292?v=4",
-                author: "Scooby Do!",
-                name: "Scooby",
-                summary:
-                  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, laudantium? Nisi eaque recusandae fugiat velit repellat quasi culpa reiciendis ducimus laudantium ipsa, quod facere repellendus labore, ipsum ullam. Sint, dolorum.",
-                total_pages: 100,
-              },
-              created_at: new Date(),
-            }}
-          />
+        {ratings?.map((rating) => (
+          <RatingCard key={rating.id} rating={rating} />
         ))}
       </section>
     </Container>

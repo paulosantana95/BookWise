@@ -9,7 +9,7 @@ type AvatarProps = ComponentProps<typeof Container> & {
 
 export const Avatar = ({ src, size, alt, ...props }: AvatarProps) => {
   return (
-    <Container size={size} {...Container}>
+    <Container size={size} {...props}>
       <AvatarImage src={src} width={80} height={80} alt={alt} />
     </Container>
   );

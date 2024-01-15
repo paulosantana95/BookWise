@@ -20,6 +20,7 @@ export default function Login() {
           width={232}
           height={58}
           alt="BookWise logo"
+          priority={false}
         />
       </LogoSection>
 
