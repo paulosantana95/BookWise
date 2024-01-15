@@ -19,4 +19,9 @@ export const AuthButton = styled("button", {
   display: "flex",
   alignItems: "center",
   gap: "$5",
+  transition: "0.2s",
+
+  "&:hover": {
+    background: "$gray500",
+  },
 });
