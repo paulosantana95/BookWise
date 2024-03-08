@@ -35,7 +35,7 @@ export const BookCard = ({ book, size = "md" }: BookCardProps) => {
   const currentSize = IMAGE_SIZES[size];
 
   return (
-    <RatingDialog>
+    <RatingDialog bookId={book.id}>
       <Container>
         {book?.alreadyRead && <ReadBadge>LIDO</ReadBadge>}
 
