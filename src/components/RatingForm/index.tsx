@@ -7,11 +7,18 @@ import {
 import { Avatar } from "../ui/Avatar";
 import { Heading } from "../Typography";
 import { RatingStars } from "../RatingStars";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { useSession } from "next-auth/react";
 import { TextArea } from "../ui/Form/TextArea";
 import { ActionIcon } from "../ui/ActionIcon";
 import { Check, X } from "@phosphor-icons/react";
+import {
+  InvalidateQueryFilters,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { api } from "@/lib/axios";
+import { queryClient } from "@/lib/react-query";
 
 type RatingFormProps = {
   onCancel: () => void;
@@ -26,6 +33,29 @@ export const RatingForm = ({ onCancel, bookId }: RatingFormProps) => {
   const user = session?.user;
   const submitDisabled = !description.trim() || !currentRate;
 
+  const queryClient = useQueryClient();
+
+  const { mutateAsync: handleRate } = useMutation({
+    mutationFn: async () => {
+      await api.post(`/books/${bookId}/rate`, {
+        description,
+        rate: currentRate,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["book", bookId] as InvalidateQueryFilters);
+      queryClient.invalidateQueries(["books"] as InvalidateQueryFilters);
+      onCancel();
+    },
+  });
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (submitDisabled) return;
+    await handleRate();
+  };
+
   return (
     <Container>
       {user && (
@@ -35,11 +65,15 @@ export const RatingForm = ({ onCancel, bookId }: RatingFormProps) => {
             <Heading size="xs">{user.name}</Heading>
           </section>
 
-          <RatingStars size="lg" rating={currentRate} />
+          <RatingStars
+            size="lg"
+            rating={currentRate}
+            setRating={setCurrentRate}
+          />
         </UserDetails>
       )}
 
-      <FormContainer>
+      <FormContainer onSubmit={handleSubmit}>
         <TextArea
           placeholder="Escreva sua avaliação"
           maxLength={450}
