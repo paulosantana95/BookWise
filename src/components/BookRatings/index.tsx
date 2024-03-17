@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { Text } from "../Typography";
 import { RatingWithAuthor, UserRatingCard } from "../UserRatingCard";
 import { Link } from "../ui/Link";
 import { Container } from "./styles";
 import { RatingForm } from "../RatingForm";
 import { useSession } from "next-auth/react";
+import { LoginDialog } from "../LoginDialog";
 
 type BookRatingsProps = {
   ratings: RatingWithAuthor[];
@@ -22,6 +23,8 @@ export const BookRatings = ({ ratings, bookId }: BookRatingsProps) => {
     setShowForm(true);
   };
 
+  const RatingWrapper = isAuthenticated ? Fragment : LoginDialog;
+
   const canRate = ratings.every(
     (rating) => rating.user_id !== session?.user?.id
   );
@@ -30,7 +33,11 @@ export const BookRatings = ({ ratings, bookId }: BookRatingsProps) => {
     <Container>
       <header>
         <Text>Avaliações</Text>
-        {canRate && <Link withoutIcon onClick={handleRate} text="Avaliar" />}
+        {canRate && (
+          <RatingWrapper>
+            <Link withoutIcon onClick={handleRate} text="Avaliar" />
+          </RatingWrapper>
+        )}
       </header>
 
       <section>
