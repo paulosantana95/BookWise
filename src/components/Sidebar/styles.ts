@@ -15,7 +15,7 @@ export const Container = styled("aside", {
   paddingTop: 40,
   paddingBottom: 24,
 
-  img: {
+  ".logo": {
     marginBottom: 64,
   },
 });

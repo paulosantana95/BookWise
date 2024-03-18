@@ -5,7 +5,6 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <link rel="icon" href="/favicon.svg" />
         <style
           id="stitches"
           dangerouslySetInnerHTML={{ __html: getCssText() }}

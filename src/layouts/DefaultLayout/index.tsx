@@ -13,6 +13,7 @@ export const DefaultLayout = ({ title, children }: DefaultLayoutProps) => {
     <Container>
       <Head>
         <title>{`${title} | BookWise`}</title>
+        <link rel="shortcut icon" href="/favicon.svg" type="image/svg" />
       </Head>
       <Sidebar />
       <Content>{children}</Content>

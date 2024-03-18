@@ -21,6 +21,7 @@ export const Sidebar = () => {
     <Container>
       <div>
         <Image
+          className="logo"
           src="/images/logo.svg"
           width={128}
           height={32}
