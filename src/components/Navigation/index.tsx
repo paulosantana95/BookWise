@@ -26,7 +26,7 @@ export const Navigation = () => {
     if (session) {
       return NAV_ITEMS.concat({
         label: "Perfil",
-        href: "/profile",
+        href: `/profile/${session.user.id}`,
         icon: <User size={24} />,
       });
     }
