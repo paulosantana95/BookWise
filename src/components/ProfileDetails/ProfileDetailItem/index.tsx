@@ -8,7 +8,11 @@ type ProfileDetailItemProps = {
   label: string;
 };
 
-export const ProfileDetailItem = ({ icon, info, label }: ProfileDetailItemProps) => {
+export const ProfileDetailItem = ({
+  icon,
+  info,
+  label,
+}: ProfileDetailItemProps) => {
   return (
     <Container>
       {icon}

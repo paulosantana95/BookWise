@@ -3,7 +3,12 @@ import { Container, ProfileDetailsWrapper, UserInfo } from "./styles";
 import { Avatar } from "../ui/Avatar";
 import { Heading, Text } from "../Typography";
 import { ProfileDetailItem } from "./ProfileDetailItem";
-import { BookOpen, BookmarkSimple, Books, UserList } from "@phosphor-icons/react";
+import {
+  BookOpen,
+  BookmarkSimple,
+  Books,
+  UserList,
+} from "@phosphor-icons/react";
 
 type ProfileDetailsProps = {
   profile: ProfileData;
@@ -15,7 +20,11 @@ export const ProfileDetails = ({ profile }: ProfileDetailsProps) => {
   return (
     <Container>
       <UserInfo>
-        <Avatar size="lg" alt={profile.user.name} src={profile.user.avatar_url} />
+        <Avatar
+          size="lg"
+          alt={profile.user.name}
+          src={profile.user.avatar_url}
+        />
         <Heading size="md" css={{ marginTop: 20 }}>
           {profile.user.name}
         </Heading>
